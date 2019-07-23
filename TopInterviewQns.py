@@ -118,6 +118,7 @@ class Solution(object):
 
 
 # 8. 字符串转整数
+    # 参考
     class Solution(object):
         def myAtoi(self, str):
             str = str.strip()  # 去除空格
@@ -149,3 +150,47 @@ class Solution(object):
                 return mini
             else:
                 return res
+
+
+# 自己编
+class Solution(object):
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        INT_MIN = -2147483648
+        INT_MAX = 2147483647
+
+        str = str.lstrip()
+        left = 0
+        right = 0
+        if str == '':
+            return 0
+        elif str[0] in ['+', '-']:
+            left = 1
+        elif str[0].isdigit():
+            left = 0
+        else:
+            return 0
+        # if left == 1 and len(str) == 1:
+        #     return 0
+        for i in range(left, len(str)):
+            if str[i].isdigit():
+                right = i
+            else:
+                break
+        num_str = str[left: right + 1]
+        num_str = num_str.lstrip('0')
+        if len(num_str) == 0:
+            return 0
+        else:
+            num = eval(num_str)
+            if left == 1 and str[0] == '-':
+                num = -num
+            if num < INT_MIN:
+                return INT_MIN
+            elif num > INT_MAX:
+                return INT_MAX
+            else:
+                return num
