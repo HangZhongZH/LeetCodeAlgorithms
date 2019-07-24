@@ -194,3 +194,100 @@ class Solution(object):
                 return INT_MAX
             else:
                 return num
+
+
+# 11. 盛最多水的容器
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        left = 0
+        right = len(height) - 1
+        maxArea = 0
+        while left <= right:
+            length = right - left
+            if height[left] <= height[right]:
+                h = height[left]
+                left += 1
+            elif height[left] > height[right]:
+                h = height[right]
+                right -= 1
+            maxArea_temp = length * h
+            if maxArea_temp >= maxArea:
+                maxArea = maxArea_temp
+        return maxArea
+
+
+# 13. 罗马数字转整数
+
+
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+
+        dic = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        dic2 = {'IV': 4, 'IX': 9, 'XL': 40, 'XC': 90, 'CD': 400, 'CM': 900}
+        num = 0
+        tiao = False
+        for i in range(len(s)):
+            if tiao:
+                tiao = False
+                pass
+            elif i != len(s) and s[i: i + 2] in dic2:
+                num += dic2[s[i: i + 2]]
+                tiao = True
+            else:
+                num += dic[s[i]]
+        return num
+
+
+# 20. 有效的括号
+
+
+# 1st way
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        while '{}' in s or '[]' in s or '()' in s:
+            s = s.replace('{}', '')
+            s = s.replace('[]', '')
+            s = s.replace('()', '')
+        return s == ''
+
+
+# 2nd way
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s_list = list(s)
+        stack = []
+        dic = {'(': ')', '[': ']', '{': '}'}
+        if s_list == []:
+            return True
+        else:
+            stack.append(s_list[0])
+            for i in range(1, len(s_list)):
+                if stack == []:
+                    stack.append(s_list[i])
+                elif stack[-1] in dic:
+                    if dic[stack[-1]] == s_list[i]:
+                        stack.pop()
+                    elif dic[stack[-1]] != s_list[i]:
+                        stack.append(s_list[i])
+                elif stack[-1] not in dic:
+                    return False
+            return stack == []
+
+
+
