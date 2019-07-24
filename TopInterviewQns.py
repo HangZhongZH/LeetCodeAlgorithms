@@ -196,6 +196,8 @@ class Solution(object):
                 return num
 
 
+
+
 # 11. 盛最多水的容器
 class Solution(object):
     def maxArea(self, height):
@@ -220,9 +222,9 @@ class Solution(object):
         return maxArea
 
 
+
+
 # 13. 罗马数字转整数
-
-
 class Solution(object):
     def romanToInt(self, s):
         """
@@ -246,9 +248,8 @@ class Solution(object):
         return num
 
 
+
 # 20. 有效的括号
-
-
 # 1st way
 class Solution(object):
     def isValid(self, s):
@@ -291,3 +292,135 @@ class Solution(object):
 
 
 
+
+# 9.回文数
+# Way 1
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        x_str = str(x)
+        if not x_str[0].isdigit():
+            return False
+        else:
+            if len(x_str) == 1:
+                return True
+            elif len(x_str) > 1:
+                left = 0
+                right = len(x_str) - 1
+                while left < right:
+                    if x_str[left] != x_str[right]:
+                        return False
+                    else:
+                        left += 1
+                        right -= 1
+                return True
+
+# Way 2
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        x_str = str(x)
+        y = x_str[:: -1]
+        return y == x_str
+
+
+# 14.最长公共前缀
+# Way 1
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if not strs:
+            return ''
+        x1 = min(strs)
+        x2 = max(strs)
+        for idx in range(len(x1)):
+            if x1[idx] != x2[idx]:
+                return x1[: idx]
+        return x1
+
+# Way 2
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if not strs:
+            return ''
+        elif len(strs) == 1:
+            return strs[0]
+        ans = strs[0]
+        for i in range(1, len(strs)):
+            temp = strs[i]
+            l = 0
+            while l < min(len(ans), len(temp)):
+                if ans[l] != temp[l]:
+                    break
+                else:
+                    l += 1
+            ans = ans[: l]
+        return ans
+
+
+
+
+# 15. 三数之和
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        if len(nums) < 3:
+            return []
+        nums.sort()
+        ans = []
+        for i in range(len(nums) - 2):
+            if nums[i] == nums[i - 1] and i >= 1:
+                continue
+            left = i + 1
+            right = len(nums) - 1
+            if nums[i] > 0:
+                break
+            while left < right:
+                if nums[i] + nums[left] + nums[right] == 0:
+                    ans.append([nums[i], nums[left], nums[right]])
+                    while nums[left] == nums[left + 1] and left < right - 1:
+                        left += 1
+                    while nums[right] == nums[right - 1] and right > left + 1:
+                        right -= 1
+                    left += 1
+                    right -= 1
+                elif nums[i] + nums[left] + nums[right] < 0:
+                    left += 1
+                else:
+                    right -= 1
+        return ans
+
+
+
+
+# 17.电话号码的字母组合
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        dic = {'2': ['a','b','c'], '3': ['d','e','f'], '4': ['g','h','i'], '5': ['j','k','l'], '6': ['m','n','o'], '7': ['p','q','r','s'], '8': ['t','u','v'], '9': ['w','x','y','z']}
+        if not digits:
+            return []
+        length = len(digits)
+        ans = ['']
+        for i in range(length):
+            ans = [x + y for x in ans for y in dic[digits[i]]]
+        return ans
