@@ -424,3 +424,89 @@ class Solution(object):
         for i in range(length):
             ans = [x + y for x in ans for y in dic[digits[i]]]
         return ans
+
+
+
+# 19. 删除链表的倒数第N个节点
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        temp = ListNode(0)
+        temp.next = head
+        l1 = temp
+        l2 = temp
+        for i in range(n):
+            l1 = l1.next
+        while l1.next != None:
+            l1 = l1.next
+            l2 = l2.next
+        l2.next = l2.next.next
+        return temp.next
+
+
+
+
+
+# 21. 合并两个有序链表
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        ans = ListNode(0)
+        temp = ans
+        while l1 != None and l2 != None:
+            if l1.val <= l2.val:
+                temp.next = l1
+                l1 = l1.next
+            else:
+                temp.next = l2
+                l2 = l2.next
+            temp = temp.next
+        if l1 == None:
+                temp.next = l2
+        elif l2 == None:
+                temp.next = l1
+        return ans.next
+
+
+
+# 206.反转列表
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+# Way 1
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        past = None
+        current = head
+        while current:
+            nextTemp = current.next
+            current.next = past
+            past = current
+            current = nextTemp
+        return past
